@@ -1,17 +1,17 @@
-const mysql = require('mysql');
-const config = require('./config_sql');
+const mysql = require('mysql2');
 const con = mysql.createConnection({
-    host: config.host,
-    user: config.uname,
-    password: config.upass,
-    database: config.database
+    host: 'localhost',
+    user: 'root',
+    port: '3306',
+    password: 'password',
+    database: 'apartment_db'
 });
 
 connect();
 //used to establish connection with the database
 function connect()
 {
-    con.connect(function(err) 
+    con.connect(function(err)
     {
         if (err) throw err;
         console.log("database Connected!");
