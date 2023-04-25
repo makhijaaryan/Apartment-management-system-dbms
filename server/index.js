@@ -95,7 +95,8 @@ app.post('/raisingcomplaint',function(req,res){
 });
 
 //create a new tenant by owner
-app.post('/createtenant',function(req,res){
+app.post('/createtenant',function(req,res)
+{
   const name = req.body.name;
   const age = req.body.age;
   const tenantno = req.body.tenantno;  
@@ -104,18 +105,19 @@ app.post('/createtenant',function(req,res){
   const password = req.body.password;
   const dob = req.body.dob;
   const values = [tenantno,name,dob,roomno,age];
-  const resul =db.createtenant(values,(err,result)=>{
-    if(err) console.log(err);
   const prof = [adhaar,tenantno];
   const vals = ["t-"+tenantno,password,tenantno];
-  const resul =db.createtenantproof(prof,(err,result)=>{
+
+  const rest =db.createtenant(values,(err,result)=>{
+    if(err) console.log(err);
+  });
+  const rep =db.createtenantproof(prof,(err,result)=>{
     if(err) console.log(err);//res.sendStatus(404);
-  })
+  });
   const respn =db.createuserid(vals,(err,result)=>{
     if(err) console.log(err);//res.sendStatus(404);
     else res.sendStatus(200);
   })
-});
 });
 
 //creates employee by admin
