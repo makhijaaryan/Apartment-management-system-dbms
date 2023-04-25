@@ -1,7 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import Particle from "./Particle";
+
+
 
 function Auth(props) {
   const nav = useNavigate();
@@ -86,13 +87,13 @@ function Auth(props) {
   };
 
   return (
-    <div>
-      <div className="flex items-center min-h-screen z-50">
-        <div className="container mx-auto">
-          <div className="max-w-md mx-auto my-10">
-            <div className="text-center">
-              <h1 className="my-3 text-3xl font-semibold text-gray-700 ">
-                Jasmine Towers
+    <div className="bg-orange-200">
+      <div className="flex items-center min-h-screen z-50 ">
+        <div className="container mx-auto ">
+          <div className="max-w-md mx-auto my-10 bg-rose-700 p-5">
+            <div className="text-center ">
+              <h1 className="my-3 text-3xl font-semibold text-zinc-50 ">
+                Royal Towers
               </h1>
             </div>
             <div className="m-7">
@@ -100,7 +101,7 @@ function Auth(props) {
                 <div className="relative mb-3">
                   <label
                     htmlFor="user-id"
-                    className="block mb-2 text-sm text-gray-600"
+                    className="block mb-2 text-sm text-gray-50"
                   >
                     User Id
                   </label>
@@ -129,7 +130,7 @@ function Auth(props) {
                   <div className="flex justify-between mb-2">
                     <label
                       htmlFor="password"
-                      className="text-sm text-gray-600 "
+                      className="text-sm text-gray-50 "
                     >
                       Password
                     </label>
@@ -168,7 +169,6 @@ function Auth(props) {
           </div>
         </div>
       </div>
-      <Particle />
     </div>
   );
 }

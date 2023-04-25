@@ -26,6 +26,7 @@ function App() {
     "Create owner",
     "Allotting Parking slot",
     "Complaints",
+    "Create Employee",
   ];
   const forEmployee = ["Complaints"];
   const forTenant = [

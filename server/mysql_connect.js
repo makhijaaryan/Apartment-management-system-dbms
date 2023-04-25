@@ -104,7 +104,6 @@ function viewcomplaints(callback)
 
 
 //view only owner complaints
-//dbms yuvarraj
 function ownercomplaints(ownerid,callback)
 {
     sql = 'select complaints,room_no from block where room_no in (select room_no from owner where owner_id in(select id from auth where user_id=?))';
@@ -174,6 +173,27 @@ function createtenantproof(values,callback)
         callback(err,results);
     })
 }
+
+//get the data of employee
+function getemployeedata(eid,callback)
+{
+    sql = 'select * from employee where emp_id in (select id from auth where user_id=?)';
+    con.query(sql,eid,(err,results)=>
+    {
+        callback(err,results);
+    })
+}
+
+//creating an employee id
+function createemployee(values,callback)
+{
+    sql = 'insert into employee values(?,?,?,?,?,?)';
+    con.query(sql,values,(err,results)=>
+    {
+        callback(err,results);
+    })
+}
+
 function createuserid(values,callback)
 {
     sql = 'insert into auth values(?,?,?)';
@@ -285,6 +305,8 @@ module.exports = {
     gettenantdata,
     createtenant,
     createtenantproof,
+    getemployeedata,
+    createemployee,
     ownerroomdetails,
     ownercomplaints,
     viewparking,

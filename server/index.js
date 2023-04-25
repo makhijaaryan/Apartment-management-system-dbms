@@ -118,6 +118,33 @@ app.post('/createtenant',function(req,res){
 });
 });
 
+//creates employee by admin
+app.post('/createemployee',(req,res)=>{
+  const empid = req.body.empid;
+  const name = req.body.name;
+  const salary = req.body.salary;
+  const emptype = req.body.emptype;
+  const age = req.body.age;
+  const blockno = req.body.blockno;
+  const proof = req.body.adhaar;
+  const password = req.body.password;
+  const values = [empid,name,salary,emptype,age,blockno];
+  const proofval = [proof,empid];
+  const vals = ["e-"+empid,password,empid];
+  const rest = db.createemployee(values,(err,result)=>{
+    if(err) console.log(err);//res.sendStatus(404);
+  });
+  const rep = db.createemployeeproof(proofval,(err,result)=>{
+    if(err) console.log(err);//res.sendStatus(404);
+  });
+  const respn =db.createuserid(vals,(err,result)=>{
+    if(err) console.log(err);//res.sendStatus(404);
+    else res.sendStatus(200);
+  });
+});
+
+
+
 
 //creates owner in owner table
 app.post('/createowner',(req,res)=>
@@ -146,7 +173,6 @@ const respn =db.createuserid(vals,(err,result)=>{
   else res.sendStatus(200);
 })
 });
-
 
 
 //get the tenent details fetch all data from table
