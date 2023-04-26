@@ -6,9 +6,8 @@ const con = mysql.createConnection({
     password: 'password',
     database: 'newapartment'
 });
-
+s
 connect();
-//used to establish connection with the database
 function connect()
 {
     con.connect(function(err)
