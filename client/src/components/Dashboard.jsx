@@ -3,6 +3,37 @@ import React, { useContext, useState, useEffect } from "react";
 import { HamContext } from "../HamContextProvider";
 
 function Dashboard(props) {
+
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  const slides = [
+    {
+      src: require('../images/apartment1.jpg'),
+      alt: 'Slide 1'
+    },
+    {
+      src: require('../images/apartment.jpg'),
+      alt: 'Slide 2'
+    },
+    {
+      src: require('../images/apartment2.jpg'),
+      alt: 'Slide 3'
+    }
+  ];
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % slides.length);
+    }, 3000); // Change this value to adjust the slide interval
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  const handleSlideClick = (index) => {
+    setActiveIndex(index);
+  };
+
+
   const { hamActive, hamHandler } = useContext(HamContext);
   const [forBox, setForBox] = useState();
 
@@ -94,28 +125,24 @@ function Dashboard(props) {
             );
           })}
       </div>
-
-      <div id="carouselExample" className="carousel slide mx-5 mb-1.5" style={{height:'30rem', marginTop:'-7.5rem'}}>
-          <div className="carousel-inner" style={{height:'30rem'}}>
-              <div className="carousel-item active">
-              <img src={require('../images/apartment1.jpg')} className="d-block w-100" alt="..."/>
-              </div>
-              <div className="carousel-item">
-              <img src={require('../images/apartment.jpg')} className="d-block w-100" alt="..."/>
-              </div>
-              <div className="carousel-item">
-              <img src={require('../images/apartment2.jpg')} className="d-block w-100" alt="..."/>
-              </div>
+      <div className="carousel slide mx-5 mb-1.5" data-carousel="slide" style={{height:'30rem', marginTop:'-1.5rem'}}>
+      <div className="carousel-inner" style={{height:'30rem'}}>
+        {slides.map((slide, index) => (
+          <div className={`carousel-item${index === activeIndex ? ' active' : ''}`} key={index}>
+            <img src={slide.src} className="d-block w-100" alt={slide.alt} onClick={() => handleSlideClick(index)} />
           </div>
-          <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-              <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Previous</span>
-          </button>
-          <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-              <span className="carousel-control-next-icon" aria-hidden="true"></span>
-              <span className="visually-hidden">Next</span>
-          </button>
-        </div>
+        ))}
+      </div>
+      <button className="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+        <span className="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Previous</span>
+      </button>
+      <button className="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+        <span className="carousel-control-next-icon" aria-hidden="true"></span>
+        <span className="visually-hidden">Next</span>
+      </button>
+    </div>
+    
     </div>
   );
 }
