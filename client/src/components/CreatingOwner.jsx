@@ -47,7 +47,16 @@ function CreatingUser() {
     }
   }
 
-
+  const clearform = () => {
+    setName("");
+    setAge("");
+    setAdhaar("");
+    setDob("");
+    setOwnerId("");
+    setRoomno("");
+    setPass("");
+    setAggrementStatus("");
+  };
 
 
   const post = async () => {
@@ -80,6 +89,7 @@ function CreatingUser() {
   const submitHandler = function (e) {
     e.preventDefault();
     post();
+    clearform();
   };
 
   return (
@@ -106,7 +116,7 @@ function CreatingUser() {
           />
         </div>
 
-        <div className="mb-5">
+    <div className="mb-5">
       <label htmlFor="owner-id" className="mb-3 block text-base font-medium text-[#07074D]">
         Owner Id
       </label>
@@ -182,7 +192,7 @@ function CreatingUser() {
         </div>
       </div>
     </div>
-        <div>
+    <div>
       <div className="mb-5">
         <label
           htmlFor="dob"
