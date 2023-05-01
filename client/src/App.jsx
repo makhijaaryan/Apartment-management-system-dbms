@@ -17,6 +17,7 @@ import RoomDetails from "./components/RoomDetails";
 import ErrorPage from "./ErrorPage";
 import ComplaintsViewerOwner from "./components/ComplaintsViewerOwner";
 import RoomDetailsOwner from "./components/RoomDetailsOwner";
+import CreatingEmployee from "./components/CreatingEmployee";
 
 function App() {
   // Sidebar
@@ -125,7 +126,20 @@ function App() {
               </section>
             </main>
           }
+        />     
+           
+        <Route
+          path="/admin/createemployee"
+          element={
+            <main>
+              <Header forHam={forAdmin} />
+              <section className="p-5">
+                <CreatingEmployee />
+              </section>
+            </main>
+          }
         />
+        
         <Route
           path="/admin/allottingparkingslot"
           element={
