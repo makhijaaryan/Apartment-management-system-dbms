@@ -9,7 +9,6 @@ function CreatingEmployee(){
     const ageEl = useRef(null);
     const blocknoEl = useRef(null);
     const passEl = useRef(null);
-    const adhaarEl = useRef(null);
     const dobEl = useRef(null);
 
     const [name, setName] = useState("");
@@ -18,7 +17,6 @@ function CreatingEmployee(){
     const [age, setAge] = useState("");
     const [blockno, setBlockno] = useState("");
     const [pass, setPass] = useState("");
-    const [adhaar, setAdhaar] = useState("");
     const [employeeId, setEmployeeId] = useState("");
     const [dob, setDob] = useState("");
 
@@ -31,7 +29,6 @@ function CreatingEmployee(){
                 age: age,
                 blockno: blockno,
                 password: pass,
-                adhaar: adhaar,
                 employeeId: employeeId,
             });
             if (res.status === 200) {
@@ -42,7 +39,6 @@ function CreatingEmployee(){
                 ageEl.current.value = "";
                 blocknoEl.current.value = "";
                 passEl.current.value = "";
-                adhaarEl.current.value = "";
             }
         } catch (error) {
             console.log(error);
@@ -117,26 +113,7 @@ function CreatingEmployee(){
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
                 </div>
-                <div className="mb-5">
-                <label
-                    htmlFor="Adhaar"
-                    className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                    Adhaar
-                </label>
-                <input
-                    type="text"
-                    ref={adhaarEl}
-                    value={adhaar}
-                    onChange={() => {
-                    setAdhaar(adhaarEl.current.value);
-                    }}
-                    name="Adhaar"
-                    id="Adhaar"
-                    placeholder="Enter your Adhaar"
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-                </div>
+                
                 <div className="mb-5">
                 <label
                     htmlFor="pass"

@@ -128,10 +128,8 @@ app.post('/createemployee',(req,res)=>{
   const emptype = req.body.empTy;
   const age = req.body.age;
   const blockno = req.body.blockno;
-  const proof = req.body.adhaar;
   const password = req.body.password;
   const values = [empid,name,salary,emptype,age,blockno];
-  const proofval = [proof,empid];
   const vals = ["e-"+empid,password,empid];
   const rest = db.createemployee(values,(err,result)=>{
     if(err) console.log(err);//res.sendStatus(404);
