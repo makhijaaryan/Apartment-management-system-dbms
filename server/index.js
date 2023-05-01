@@ -122,10 +122,10 @@ app.post('/createtenant',function(req,res)
 
 //creates employee by admin
 app.post('/createemployee',(req,res)=>{
-  const empid = req.body.empid;
+  const empid = req.body.employeeId;
   const name = req.body.name;
   const salary = req.body.salary;
-  const emptype = req.body.emptype;
+  const emptype = req.body.empTy;
   const age = req.body.age;
   const blockno = req.body.blockno;
   const proof = req.body.adhaar;
@@ -136,9 +136,7 @@ app.post('/createemployee',(req,res)=>{
   const rest = db.createemployee(values,(err,result)=>{
     if(err) console.log(err);//res.sendStatus(404);
   });
-  const rep = db.createemployeeproof(proofval,(err,result)=>{
-    if(err) console.log(err);//res.sendStatus(404);
-  });
+
   const respn =db.createuserid(vals,(err,result)=>{
     if(err) console.log(err);//res.sendStatus(404);
     else res.sendStatus(200);
