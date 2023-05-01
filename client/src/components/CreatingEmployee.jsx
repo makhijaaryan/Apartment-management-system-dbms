@@ -5,7 +5,7 @@
 //     const employeeEl = useRef(null);
 //     const nameEl = useRef(null);
 //     const salaryEl = useRef(null);
-//     const emptyEl = useRef(null);
+//     const empTyEl = useRef(null);
 //     const ageEl = useRef(null);
 //     const blocknoEl = useRef(null);
 //     const passEl = useRef(null);

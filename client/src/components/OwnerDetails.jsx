@@ -5,8 +5,8 @@ function OwnerDetails(props) {
   const oHeader = [
     "Owner Id",
     "Name",
-    "Age",
     "Room no",
+    "Age",
     "DOB",
     "Agreement Status",
   ];

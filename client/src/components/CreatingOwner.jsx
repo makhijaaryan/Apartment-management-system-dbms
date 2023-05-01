@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 function CreatingUser() {
   const nameEl = useRef(null);
@@ -15,10 +16,39 @@ function CreatingUser() {
   const [age, setAge] = useState("");
   const [adhaar, setAdhaar] = useState("");
   const [dob, setDob] = useState("");
-  const [ownerId, setOwnerId] = useState("");
+  const [ownerId, setOwnerId] = useState(Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000);
   const [roomno, setRoomno] = useState("");
   const [pass, setPass] = useState("");
   const [aggrementStatus, setAggrementStatus] = useState("");
+
+  const [idCounter, setIdCounter] = useState(1);
+
+  const handleOwnerIdChange = (event) => {
+    setOwnerId(parseInt(event.target.value));
+  };
+
+  const handleGenerateOwnerId = () => {
+    const newId = ownerId + idCounter;
+    setOwnerId(newId);
+    setIdCounter(idCounter + 1);
+  };
+  function calculateAge() {
+    const dateOfBirth = new Date(dob);
+    const ageDiffMs = Date.now() - dateOfBirth.getTime();
+    const ageDate = new Date(ageDiffMs);
+    const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+    setAge(calculatedAge);
+  }
+
+  function handleAdhaarChange() {
+    const adhaarValue = adhaarEl.current.value.replace(/\D/g, '');
+    if (adhaarValue.length <= 12) {
+      setAdhaar(adhaarValue);
+    }
+  }
+
+
+
 
   const post = async () => {
     try {
@@ -75,26 +105,25 @@ function CreatingUser() {
             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />
         </div>
+
         <div className="mb-5">
-          <label
-            htmlFor="owner-id"
-            className="mb-3 block text-base font-medium text-[#07074D]"
-          >
-            Owner Id
-          </label>
-          <input
-            type="text"
-            ref={ownerEl}
-            name="owner-id"
-            id="owner-id"
-            value={ownerId}
-            placeholder="Owner Id"
-            onChange={() => {
-              setOwnerId(ownerEl.current.value);
-            }}
-            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-          />
-        </div>
+      <label htmlFor="owner-id" className="mb-3 block text-base font-medium text-[#07074D]">
+        Owner Id
+      </label>
+      <input
+        type="text"
+        name="owner-id"
+        id="owner-id"
+        value={ownerId}
+        placeholder="Owner Id"
+        onChange={handleOwnerIdChange}
+        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+      />
+      <button onClick={handleGenerateOwnerId}>Generate Owner Id</button>
+    </div>
+
+
+
         <div className="mb-5">
           <label
             htmlFor="room-no"
@@ -115,66 +144,105 @@ function CreatingUser() {
             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />
         </div>
-        <div className="mb-5">
-          <label
-            htmlFor="owner-id"
-            className="mb-3 block text-base font-medium text-[#07074D]"
-          >
-            Agreement Status
+        <div>
+      <div className="mb-5">
+        <label
+          htmlFor="owner-id"
+          className="mb-3 block text-base font-medium text-[#07074D]"
+        >
+          Agreement Status
+        </label>
+        <div className="flex flex-row">
+          <label className="mr-4">
+            <input
+              type="radio"
+              name="aggrementStatus"
+              value="Yes"
+              checked={aggrementStatus === 'Yes'}
+              onChange={() => {
+                setAggrementStatus('Yes');
+              }}
+              className="mr-2"
+            />
+            Yes
           </label>
-          <input
-            type="text"
-            ref={aggreeEl}
-            name="aggrementStatus"
-            id="aggrementStatus"
-            value={aggrementStatus}
-            placeholder="Aggrement Status [Yes / no]"
-            onChange={() => {
-              setAggrementStatus(aggreeEl.current.value);
-            }}
-            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-          />
-        </div>
-        <div className="mb-5">
-          <label
-            htmlFor="age"
-            className="mb-3 block text-base font-medium text-[#07074D]"
-          >
-            Age
+          <label>
+            <input
+              type="radio"
+              name="aggrementStatus"
+              value="No"
+              checked={aggrementStatus === 'No'}
+              onChange={() => {
+                setAggrementStatus('No');
+              }}
+              className="mr-2"
+            />
+            No
           </label>
-          <input
-            type="age"
-            name="age"
-            ref={ageEl}
-            id="age"
-            value={age}
-            onChange={() => {
-              setAge(ageEl.current.value);
-            }}
-            placeholder="Age"
-            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-          />
         </div>
-        <div className="mb-5">
-          <label
-            htmlFor="Adhaar"
-            className="mb-3 block text-base font-medium text-[#07074D]"
-          >
-            Adhaar
-          </label>
-          <input
-            type="text"
-            ref={adhaarEl}
-            value={adhaar}
-            onChange={() => {
-              setAdhaar(adhaarEl.current.value);
-            }}
-            name="Adhaar"
-            id="Adhaar"
-            placeholder="Enter your Adhaar"
-            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-          />
-        </div>
+      </div>
+    </div>
+        <div>
+      <div className="mb-5">
+        <label
+          htmlFor="dob"
+          className="mb-3 block text-base font-medium text-[#07074D]"
+        >
+          DOB
+        </label>
+        <input
+          type="date"
+          name="dob"
+          ref={dobEl}
+          value={dob}
+          onChange={() => {
+            setDob(dobEl.current.value);
+            calculateAge();
+          }}
+          id="dob"
+          className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+        />
+      </div>
+      <div className="mb-5">
+        <label
+          htmlFor="age"
+          className="mb-3 block text-base font-medium text-[#07074D]"
+        >
+          Age
+        </label>
+        <input
+          type="text"
+          name="age"
+          id="age"
+          value={age}
+          readOnly
+          placeholder="Age"
+          className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+        />
+      </div>
+    </div>
+    <div>
+      <div className="mb-5">
+        <label
+          htmlFor="Adhaar"
+          className="mb-3 block text-base font-medium text-[#07074D]"
+        >
+          Aadhaar
+        </label>
+        <input
+          type="text"
+          ref={adhaarEl}
+          value={adhaar}
+          onChange={handleAdhaarChange}
+          name="Adhaar"
+          id="Adhaar"
+          placeholder="Enter your Aadhaar"
+          maxLength={12}
+          className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+        />
+      </div>
+    </div>
+
         <div className="mb-5">
           <label
             htmlFor="pass"
@@ -190,31 +258,13 @@ function CreatingUser() {
             onChange={() => {
               setPass(passEl.current.value);
             }}
-            id="dob"
+            id="pass"
             placeholder="Enter your Password"
             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />
         </div>
-        <div className="mb-5">
-          <label
-            htmlFor="dob"
-            className="mb-3 block text-base font-medium text-[#07074D]"
-          >
-            DOB
-          </label>
-          <input
-            type="text"
-            name="dob"
-            ref={dobEl}
-            value={dob}
-            onChange={() => {
-              setDob(dobEl.current.value);
-            }}
-            id="dob"
-            placeholder="Enter your dob"
-            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-          />
-        </div>
+
+
 
         <div className="flex w-full">
           <button className="mx-auto hover:shadow-form  py-3 px-8 text-white bg-blue-500 rounded-md focus:bg-blue-600 focus:outline-none hover:bg-white hover:text-blue-500 transition-all duration-300 hover:border-blue-500 border-transparent border-2">
