@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
 function CreatingEmployee(){
     const employeeEl = useRef(null);
@@ -17,8 +18,39 @@ function CreatingEmployee(){
     const [age, setAge] = useState("");
     const [blockno, setBlockno] = useState("");
     const [pass, setPass] = useState("");
-    const [employeeId, setEmployeeId] = useState("");
+    const [employeeId, setEmployeeId] = useState(Math.floor(Math.random() * (99999 - 10000 + 1)) + 10000);
     const [dob, setDob] = useState("");
+
+    const [idCounter, setIdCounter] = useState(1);
+    const handleEmployeeIdChange = (event) => {
+        setEmployeeId(parseInt(event.target.value));
+      };
+    
+      const handleGenerateEmployeeId = () => {
+        const newId = employeeId + idCounter;
+        setEmployeeId(newId);
+        setIdCounter(idCounter + 1);
+      };
+
+      function calculateAge() {
+        const dateOfBirth = new Date(dob);
+        const ageDiffMs = Date.now() - dateOfBirth.getTime();
+        const ageDate = new Date(ageDiffMs);
+        const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+        setAge(calculatedAge);
+      }
+    
+
+    const clearform = () => {
+        setName("");
+        setSalary("");
+        setEmpTy("");
+        setAge("");
+        setBlockno("");
+        setPass("");
+        setEmployeeId("");
+        setDob("");
+    };
 
     const createEmployee = async () => {
         try {
@@ -47,6 +79,7 @@ function CreatingEmployee(){
     const submitHandler = function (e) {
         e.preventDefault();
         createEmployee();
+        clearform();
     };
 
     return (
@@ -72,7 +105,8 @@ function CreatingEmployee(){
                     }}
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
-                </div>
+                </div>  
+
                 <div className="mb-5">
                 <label
                     htmlFor="employee-id"
@@ -82,37 +116,60 @@ function CreatingEmployee(){
                 </label>
                 <input
                     type="text"
-                    ref={employeeEl}
                     name="employee-id"
                     id="employee-id"
                     value={employeeId}
                     placeholder="Employee Id"
-                    onChange={() => {
-                    setEmployeeId(employeeEl.current.value);
-                    }}
+                    onChange={handleEmployeeIdChange}
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
+                <button onClick={handleGenerateEmployeeId}>Generate Employee Id</button>
                 </div>
-                <div className="mb-5">
-                <label
-                    htmlFor="age"
-                    className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                    Age
-                </label>
-                <input
-                    type="age"
-                    name="age"
-                    ref={ageEl}
-                    id="age"
-                    value={age}
-                    onChange={() => {
-                    setAge(ageEl.current.value);
-                    }}
-                    placeholder="Age"
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-                </div>
+                
+
+
+                <div>
+      <div className="mb-5">
+        <label
+          htmlFor="dob"
+          className="mb-3 block text-base font-medium text-[#07074D]"
+        >
+          DOB
+        </label>
+        <input
+          type="date"
+          name="dob"
+          ref={dobEl}
+          value={dob}
+          onChange={() => {
+            setDob(dobEl.current.value);
+            calculateAge();
+          }}
+          id="dob"
+          className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+        />
+      </div>
+      <div className="mb-5">
+        <label
+          htmlFor="age"
+          className="mb-3 block text-base font-medium text-[#07074D]"
+        >
+          Age
+        </label>
+        <input
+          type="text"
+          name="age"
+          id="age"
+          value={age}
+          readOnly
+          placeholder="Age"
+          className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+        />
+      </div>
+    </div>
+
+
+
                 
                 <div className="mb-5">
                 <label
@@ -134,26 +191,7 @@ function CreatingEmployee(){
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
                 </div>
-                <div className="mb-5">
-                <label
-                    htmlFor="dob"
-                    className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                    DOB
-                </label>
-                <input
-                    type="text"
-                    name="dob"
-                    ref={dobEl}
-                    value={dob}
-                    onChange={() => {
-                    setDob(dobEl.current.value);
-                    }}
-                    id="dob"
-                    placeholder="Enter your dob"
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
-                </div>
+                
                 
                 <div className="mb-5">
                 <label
@@ -177,25 +215,26 @@ function CreatingEmployee(){
                 </div>
 
                 <div className="mb-5">
-                <label
-                    htmlFor="empTy"
-                    className="mb-3 block text-base font-medium text-[#07074D]"
-                >
+                <label htmlFor="empTy" className="mb-3 block text-base font-medium text-[#07074D]">
                     Employee Type
                 </label>
-                <input
-                    type="text"
-                    ref={empTyEl}
-                    name="empTy"
+                <select
                     id="empTy"
+                    name="empTy"
                     value={empTy}
-                    placeholder="Type"
-                    onChange={() => {
-                    setEmpTy(empTyEl.current.value);
+                    onChange={(e) => {
+                    setEmpTy(e.target.value);
                     }}
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
+                >
+                    <option value="">Select an option</option>
+                    <option value="Plumber">Plumber</option>
+                    <option value="Gardener">Gardener</option>
+                    <option value="Electrician">Electrician</option>
+                    <option value="Carpenter">Carpenter</option>
+                </select>
                 </div>
+
 
 
                 <div className="mb-5">

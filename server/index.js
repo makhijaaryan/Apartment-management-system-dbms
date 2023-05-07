@@ -203,6 +203,16 @@ app.get('/ownerdetails',(req,res)=>
     })
 })
 
+//get the employee details fetch all the data from the table
+app.get('/employeedetails',(req,res)=>
+{
+    const rest = db.getdata('employee',(err,result)=>
+    {
+      res.send(result);
+    })
+})
+
+
 //view parkings owned by tenant
 app.post('/viewparking',(req,res)=>
 {

@@ -5,6 +5,7 @@ import Dashboard from "./components/Dashboard";
 import Aside from "./components/Aside";
 import Auth from "./components/Auth";
 import OwnerDetails from "./components/OwnerDetails";
+import EmployeeDetails from "./components/EmployeeDetails";
 import TenantDetails from "./components/TenantDetails";
 import CreatingOwner from "./components/CreatingOwner";
 import CreatingParkingSlot from "./components/CreatingParkingSlot";
@@ -29,7 +30,8 @@ function App() {
     "Allotting Parking slot",
     "Complaints",
     "Create Employee",
-    "Add Room"
+    "Add Room",
+    "View Employee"
   ];
   const forEmployee = ["Complaints"];
   const forTenant = [
@@ -137,6 +139,18 @@ function App() {
               <Header forHam={forAdmin} />
               <section className="p-5">
                 <CreatingEmployee />
+              </section>
+            </main>
+          }
+        />
+
+        <Route
+          path="/admin/viewemployee"
+          element={
+            <main>
+              <Header forHam={forAdmin} />
+              <section className="p-5">
+                <EmployeeDetails />
               </section>
             </main>
           }
