@@ -141,6 +141,16 @@ app.post('/createemployee',(req,res)=>{
   });
 });
 
+app.post('/createroom',(req,res)=>{
+  const room_number = req.body.roomNumber;
+  const type = req.body.type;
+  const floor = req.body.floor;
+  const blockno = req.body.blockno;
+  const values = [room_number,type,floor,blockno];
+  const rest = db.createroom(values,(err,result)=>{
+    if(err) console.log(err);//res.sendStatus(404);
+  });
+});
 
 
 
