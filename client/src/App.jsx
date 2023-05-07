@@ -18,6 +18,7 @@ import ErrorPage from "./ErrorPage";
 import ComplaintsViewerOwner from "./components/ComplaintsViewerOwner";
 import RoomDetailsOwner from "./components/RoomDetailsOwner";
 import CreatingEmployee from "./components/CreatingEmployee";
+import AddRoom from "./components/AddRoom";
 
 function App() {
   // Sidebar
@@ -28,6 +29,7 @@ function App() {
     "Allotting Parking slot",
     "Complaints",
     "Create Employee",
+    "Add Room"
   ];
   const forEmployee = ["Complaints"];
   const forTenant = [
@@ -158,6 +160,17 @@ function App() {
               <Header forHam={forAdmin} />
               <section className="p-5">
                 <ComplaintsViewer />
+              </section>
+            </main>
+          }
+        />
+        <Route
+          path="/admin/AddRoom"
+          element={
+            <main>
+              <Header forHam={forAdmin} />
+              <section className="p-5">
+                <AddRoom/>
               </section>
             </main>
           }

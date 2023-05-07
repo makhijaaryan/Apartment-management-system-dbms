@@ -76,7 +76,14 @@ function createownerproof(values,callback)
     })
 }
 
-
+function createroom(values,callback)
+{
+    sql = 'insert into room values(?,?,?,null,null,?)';
+    con.query(sql,values,(err,results)=>
+    {
+        callback(err,results);
+    })
+}
 
 //book a parking slot for the tenant
 function bookslot(values,callback)
@@ -307,6 +314,7 @@ module.exports = {
     createtenantproof,
     getemployeedata,
     createemployee,
+    createroom,
     ownerroomdetails,
     ownercomplaints,
     viewparking,
