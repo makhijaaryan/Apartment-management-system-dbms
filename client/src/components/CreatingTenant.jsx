@@ -16,8 +16,48 @@ function CreatingTenant() {
   const [dob, setDob] = useState("");
   const [roomno, setRoomno] = useState("");
   const [pass, setPass] = useState("");
-  const [tenantno, setTenantno] = useState("");
+  const [tenantno, setTenantno] = useState(Math.floor(Math.random() * (8888 - 1000 + 1)) + 1000);
   const [adhaar, setAdhaar] = useState("");
+
+  const [idCounter, setIdCounter] = useState(1);
+
+  const handleTenantIdChange = (event) => {
+    setTenantno(parseInt(event.target.value));
+  };
+  const handleGenerateTenantId = () => {
+    const newId = tenantno + idCounter;
+    setTenantno(newId);
+    setIdCounter(idCounter + 1);
+  };
+
+  function calculateAge() {
+    const dateOfBirth = new Date(dob);
+    const ageDiffMs = Date.now() - dateOfBirth.getTime();
+    const ageDate = new Date(ageDiffMs);
+    const calculatedAge = Math.abs(ageDate.getUTCFullYear() - 1970);
+    setAge(calculatedAge);
+  }
+
+  function handleAdhaarChange() {
+    const adhaarValue = adhaarEl.current.value.replace(/\D/g, "");
+    if (adhaarValue.length <= 12) {
+      setAdhaar(adhaarValue);
+    }
+  }
+
+  const clearform = () => {
+    setName("");
+    setAge("");
+    setAdhaar("");
+    setDob("");
+    setTenantno("");
+    setRoomno("");
+    setPass("");
+  };
+
+  function tenantalert() {
+    alert("Tenant Created Successfully with Tenant ID: " + tenantno + "for Room No: " + roomno);
+  }
 
   const createTenant = async () => {
     try {
@@ -47,6 +87,8 @@ function CreatingTenant() {
   const submitHandler = function (e) {
     e.preventDefault();
     createTenant();
+    clearform();
+    tenantalert();    
   };
 
   return (
@@ -74,23 +116,20 @@ function CreatingTenant() {
         </div>
         <div className="mb-5">
           <label
-            htmlFor="tenant-no"
-            className="mb-3 block text-base font-medium text-[#07074D]"
+            htmlFor="tenant-no" className="mb-3 block text-base font-medium text-[#07074D]"
           >
             Tenant No.
           </label>
           <input
             type="text"
-            ref={tenantEl}
             name="tenant-no"
             id="tenant-no"
             value={tenantno}
             placeholder="Tenant No."
-            onChange={() => {
-              setTenantno(tenantEl.current.value);
-            }}
+            onChange={handleTenantIdChange}
             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />
+          <button onClick={handleGenerateTenantId} disabled>Auto Generated Tenant No.</button>
         </div>
         <div className="mb-5">
           <label
@@ -112,26 +151,7 @@ function CreatingTenant() {
             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />
         </div>
-        <div className="mb-5">
-          <label
-            htmlFor="age"
-            className="mb-3 block text-base font-medium text-[#07074D]"
-          >
-            Age
-          </label>
-          <input
-            type="age"
-            name="age"
-            ref={ageEl}
-            id="age"
-            value={age}
-            onChange={() => {
-              setAge(ageEl.current.value);
-            }}
-            placeholder="Age"
-            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-          />
-        </div>
+        
         <div className="mb-5">
           <label
             htmlFor="dob"
@@ -140,35 +160,55 @@ function CreatingTenant() {
             DOB
           </label>
           <input
-            type="text"
+            type="date"
             name="dob"
             ref={dobEl}
             value={dob}
             onChange={() => {
               setDob(dobEl.current.value);
+              calculateAge();
             }}
             id="dob"
             placeholder="Enter your dob"
             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />
         </div>
+
+
+        <div className="mb-5">
+          <label
+            htmlFor="age"
+            className="mb-3 block text-base font-medium text-[#07074D]"
+          >
+            Age (Auto Derived)
+          </label>
+          <input
+            type="text"
+            name="age"
+            id="age"
+            value={age}
+            readOnly
+            placeholder="Age"
+            className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+          />
+        </div>
+        
         <div className="mb-5">
           <label
             htmlFor="adhaar"
             className="mb-3 block text-base font-medium text-[#07074D]"
           >
-            Adhaar
+            Adhaar (12 digit number only)
           </label>
           <input
-            type="adhaar"
+            type="type"
             name="adhaar"
             ref={adhaarEl}
             id="adhaar"
             value={adhaar}
-            onChange={() => {
-              setAdhaar(adhaarEl.current.value);
-            }}
+            onChange={handleAdhaarChange}
             placeholder="Adhaar"
+            maxLength={12}
             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />
         </div>
@@ -177,17 +217,17 @@ function CreatingTenant() {
             htmlFor="pass"
             className="mb-3 block text-base font-medium text-[#07074D]"
           >
-            Password
+            Password (8 characters minimum)
           </label>
           <input
-            type="text"
+            type="password"
             name="pass"
             ref={passEl}
             value={pass}
             onChange={() => {
               setPass(passEl.current.value);
             }}
-            id="dob"
+            id="pass"
             placeholder="Enter your Password"
             className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
           />

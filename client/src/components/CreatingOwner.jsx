@@ -32,6 +32,7 @@ function CreatingUser() {
     setOwnerId(newId);
     setIdCounter(idCounter + 1);
   };
+
   function calculateAge() {
     const dateOfBirth = new Date(dob);
     const ageDiffMs = Date.now() - dateOfBirth.getTime();
@@ -57,6 +58,7 @@ function CreatingUser() {
     setPass("");
     setAggrementStatus("");
   };
+
 
 
   const post = async () => {
@@ -86,11 +88,18 @@ function CreatingUser() {
     }
   };
 
+  function ownerAlert() {
+    alert("Owner Created Successfully with Owner Id: " + ownerId + " for apartment " + roomno);
+  }
+
   const submitHandler = function (e) {
     e.preventDefault();
     post();
     clearform();
+    ownerAlert();
   };
+
+
 
   return (
     <div className="mx-auto w-full max-w-[550px]">
@@ -129,7 +138,7 @@ function CreatingUser() {
         onChange={handleOwnerIdChange}
         className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
       />
-      <button onClick={handleGenerateOwnerId}>Generate Owner Id</button>
+      <button onClick={handleGenerateOwnerId} disabled>Auto Generated Owner Id</button>
     </div>
 
 
@@ -218,7 +227,7 @@ function CreatingUser() {
           htmlFor="age"
           className="mb-3 block text-base font-medium text-[#07074D]"
         >
-          Age
+          Age (Auto Derived)
         </label>
         <input
           type="text"
@@ -237,7 +246,7 @@ function CreatingUser() {
           htmlFor="Adhaar"
           className="mb-3 block text-base font-medium text-[#07074D]"
         >
-          Aadhaar
+          Aadhaar (12 digit number only)
         </label>
         <input
           type="text"
@@ -258,10 +267,10 @@ function CreatingUser() {
             htmlFor="pass"
             className="mb-3 block text-base font-medium text-[#07074D]"
           >
-            Password
+            Password (8 characters minimum)
           </label>
           <input
-            type="text"
+            type="password"
             name="pass"
             ref={passEl}
             value={pass}
@@ -277,7 +286,7 @@ function CreatingUser() {
 
 
         <div className="flex w-full">
-          <button className="mx-auto hover:shadow-form  py-3 px-8 text-white bg-blue-500 rounded-md focus:bg-blue-600 focus:outline-none hover:bg-white hover:text-blue-500 transition-all duration-300 hover:border-blue-500 border-transparent border-2">
+          <button className="mx-auto hover:shadow-form  py-3 px-8 text-white bg-blue-500 rounded-md focus:bg-blue-600 focus:outline-none hover:bg-white hover:text-blue-500 transition-all duration-300 hover:border-blue-500 border-transparent border-2" id="submitbtn">
             Submit
           </button>
         </div>

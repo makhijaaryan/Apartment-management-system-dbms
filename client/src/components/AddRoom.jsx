@@ -38,11 +38,16 @@ function AddRoom(){
         setBlockno("");
     };
 
+    function roomalert() {
+        alert("Room Created Successfully with Room Number: " + roomNumber + " for apartment " + blockno);
+    }
+
     
     const submitHandler = function (e) {
         e.preventDefault();
         AddRoom();
         clearform();
+        roomalert();
     };
     useEffect(() => {
         if (roomNumber.length === 3) {

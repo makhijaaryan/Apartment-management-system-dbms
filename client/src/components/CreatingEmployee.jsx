@@ -76,11 +76,19 @@ function CreatingEmployee(){
             console.log(error);
         }
     };
+
+    function employeecreatealert() {
+        alert("Employee Created Successfully with Employee Id: " + employeeId + " and Occupation: " + empTy);
+    }
+
+
     const submitHandler = function (e) {
         e.preventDefault();
         createEmployee();
         clearform();
+        employeecreatealert();
     };
+
 
     return (
         
@@ -123,7 +131,7 @@ function CreatingEmployee(){
                     onChange={handleEmployeeIdChange}
                     className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
                 />
-                <button onClick={handleGenerateEmployeeId}>Generate Employee Id</button>
+                <button onClick={handleGenerateEmployeeId} disabled>Auto Generated Employee Id</button>
                 </div>
                 
 
@@ -179,7 +187,7 @@ function CreatingEmployee(){
                     Password
                 </label>
                 <input
-                    type="text"
+                    type="password"
                     name="pass"
                     ref={passEl}
                     value={pass}
@@ -198,10 +206,10 @@ function CreatingEmployee(){
                     htmlFor="salary"
                     className="mb-3 block text-base font-medium text-[#07074D]"
                 >
-                    Salary
+                    Salary (in Rs.)
                 </label>
                 <input
-                    type="text"
+                    type="number"
                     ref={salaryEl}
                     name="salary"
                     id="salary"
@@ -238,25 +246,27 @@ function CreatingEmployee(){
 
 
                 <div className="mb-5">
-                <label
-                    htmlFor="block-no"
-                    className="mb-3 block text-base font-medium text-[#07074D]"
-                >
-                    Block Number
-                </label>
-                <input
-                    type="text"
-                    ref={blocknoEl}
-                    name="block-no"
-                    id="block-no"
-                    value={blockno}
-                    placeholder="Block Number"
-                    onChange={() => {
-                    setBlockno(blocknoEl.current.value);
-                    }}
-                    className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
-                />
+                    <label htmlFor="block-no" className="mb-3 block text-base font-medium text-[#07074D]">
+                        Block Number
+                    </label>
+                    <select
+                        name="block-no"
+                        id="block-no"
+                        ref={blocknoEl}
+                        value={blockno}
+                        onChange={() => {
+                        setBlockno(blocknoEl.current.value);
+                        }}
+                        className="w-full rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md"
+                    >
+                        <option value="">Select Block Number</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                    </select>
                 </div>
+
 
 
                 <div className="flex w-full">
